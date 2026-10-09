@@ -1,0 +1,20 @@
+{
+  "extraKnownMarketplaces": {
+    "claude-plugins-official": { "source": { "source": "github", "repo": "anthropics/claude-plugins-official" } }
+  },
+  "enabledPlugins": { "telegram@claude-plugins-official": true },
+  "channelsEnabled": true,
+  "skipDangerousModePermissionPrompt": true,
+  "disableClaudeAiConnectors": true,
+  "permissions": {
+    "deny": [
+      "Bash(rm -rf /)", "Bash(rm -rf /*)", "Bash(mkfs *)", "Bash(dd if=/dev/zero of=/dev/*)",
+      "Read(**/.env)", "Read(**/.env.*)", "Read(/data/config/.credentials.json)"
+    ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      { "hooks": [ { "type": "command", "command": "date '+Hora real en CDMX: %Y-%m-%d %H:%M (no uses la hora UTC de Telegram)'" } ] }
+    ]
+  }
+}

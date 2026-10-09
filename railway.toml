@@ -1,0 +1,6 @@
+[build]
+builder = "DOCKERFILE"
+
+[deploy]
+# Si el latido sale con exit 1, Railway vuelve a levantar el contenedor.
+restartPolicyType = "ALWAYS"
