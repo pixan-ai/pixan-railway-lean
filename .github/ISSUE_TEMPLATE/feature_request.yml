@@ -1,0 +1,17 @@
+name: Feature request
+description: Propose adding something. This repo stays minimal, so explain why it is needed.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What can't you do today, and how often does it matter?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Smallest change that would solve it
+    validations:
+      required: true
