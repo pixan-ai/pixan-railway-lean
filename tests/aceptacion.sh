@@ -15,8 +15,9 @@ git grep -nE '[0-9]{8,10}:[A-Za-z0-9_-]{35}|sk-ant-' -- . ':!tests/aceptacion.sh
 
 if command -v docker >/dev/null; then
   echo "== L2: la imagen se construye y se niega a arrancar sin llaves =="
-  docker build -q -t lean:ci . >/dev/null
+  docker build -t lean:ci .
   set +e; out="$(docker run --rm lean:ci 2>&1)"; code=$?; set -e
+  echo "$out (exit=$code)"
   [ "$code" -ne 0 ] && grep -q FALTA <<<"$out"
 fi
 echo "aceptación OK"
