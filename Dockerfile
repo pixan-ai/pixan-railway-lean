@@ -17,7 +17,7 @@ COPY --chown=agente:agente config/ /opt/semilla/config/
 COPY --chown=agente:agente entrypoint.sh /opt/semilla/entrypoint.sh
 
 ENV HOME=/home/agente \
-    PATH="/home/agente/.local/bin:/home/agente/.bun/bin:/usr/local/bin:/usr/bin:/bin" \
+    PATH="/home/agente/.local/bin:/home/agente/.bun/bin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" \
     TZ=America/Mexico_City \
     CLAUDE_CONFIG_DIR=/data/config \
     TELEGRAM_STATE_DIR=/data/config/channels/telegram
