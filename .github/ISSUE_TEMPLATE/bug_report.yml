@@ -1,0 +1,25 @@
+name: Bug report
+description: The agent does not boot, does not answer, or does something wrong.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Never paste tokens, Telegram IDs or personal data here.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you expected and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log lines
+      description: From Railway logs (look for MISSING, ERROR or heartbeat). Remove anything secret.
+      render: text
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+      placeholder: v0.1.0

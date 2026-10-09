@@ -2,5 +2,5 @@
 builder = "DOCKERFILE"
 
 [deploy]
-# Si el latido sale con exit 1, Railway vuelve a levantar el contenedor.
+# When the heartbeat exits 1, Railway brings the container back up.
 restartPolicyType = "ALWAYS"

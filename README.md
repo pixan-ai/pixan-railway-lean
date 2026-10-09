@@ -1,55 +1,53 @@
 # pixan-railway-lean
 
-Lo **mínimo** para que nazca un agente [Claude Code](https://docs.anthropic.com/claude-code) en
-[Railway](https://railway.com) y te conteste por Telegram. Unas 180 líneas en total: se lee en
-20 minutos. Cada pieza extra se agrega después, una por una, y solo si hace falta (ver `DISENO.md`).
+**English** · [Español](README.es.md)
 
-## Qué hay aquí
+The **minimum** needed to bring a [Claude Code](https://docs.anthropic.com/claude-code) agent to life
+on [Railway](https://railway.com) and have it answer you on Telegram. About 170 lines for the agent itself (tests apart), readable
+in 20 minutes. Anything extra is added later, one piece at a time, and only if needed (see [DESIGN.md](DESIGN.md)).
+
+## What's here
 
 ```
-Dockerfile            La caja: Debian + Claude Code + Bun (lo pide el plugin de Telegram) + tmux
-railway.toml          Constrúyelo con el Dockerfile; si se cae, levántalo otra vez
-entrypoint.sh         El arranque en 7 pasos (léelo: está comentado)
-config/settings.json  Reglas de Claude: plugin de Telegram, prohibiciones, hora de CDMX
-config/access.json    Quién puede escribirle al bot: solo el dueño
-workspace/CLAUDE.md   Instrucciones del agente; carga @SOUL.md e @IDENTITY.md
-workspace/SOUL.md     Personalidad (se escribe una vez; luego es del dueño)
-workspace/IDENTITY.md Datos fijos: nombre, canal, zona horaria
-tests/aceptacion.sh   Pruebas que corren sin secretos (también en GitHub Actions)
+Dockerfile            The box: Debian + Claude Code + Bun (needed by the Telegram plugin) + tmux
+railway.toml          Build with the Dockerfile; if it dies, bring it back up
+entrypoint.sh         The 7-step boot (read it: it's commented)
+config/settings.json  Claude's rules: Telegram plugin, deny list, Mexico City clock
+config/access.json    Who may message the bot: only the owner
+workspace/CLAUDE.md   The agent's instructions; imports @SOUL.md and @IDENTITY.md
+workspace/SOUL.md     Personality (written once; then it belongs to the owner)
+workspace/IDENTITY.md Fixed facts: name, channel, time zone
+tests/                Acceptance pipeline L0–L3 (see tests/README.md)
 ```
 
-## Crear un agente nuevo
+## Create a new agent
 
-1. **Credencial de Claude.** En tu computadora corre `claude setup-token`, inicia sesión y copia
-   el token que te da (dura un año). No lo pegues en ningún chat ni archivo.
-2. **Bot de Telegram.** Habla con [@BotFather](https://t.me/BotFather), manda `/newbot`, elige
-   nombre y usuario, y copia el token del bot.
-3. **Tu ID de Telegram.** Escríbele a [@userinfobot](https://t.me/userinfobot): te contesta un número.
-4. **Railway.** New Project → Deploy from GitHub repo → este repo. En el servicio:
-   - **Volume** montado en **`/data`** (ahí vive la memoria, la plática, el alma y la allowlist).
+1. **Claude credential.** On your computer run `claude setup-token`, log in and copy the token
+   (valid for one year). Don't paste it into any chat or file.
+2. **Telegram bot.** Talk to [@BotFather](https://t.me/BotFather), send `/newbot`, pick a name and
+   username, and copy the bot token.
+3. **Your Telegram ID.** Message [@userinfobot](https://t.me/userinfobot): it replies with a number.
+4. **Railway.** New Project → Deploy from GitHub repo → this repo. On the service:
+   - A **volume** mounted at **`/data`** (memory, conversation, soul and allowlist live there).
    - **Variables:**
 
-     | Variable | Valor |
-     |---|---|
-     | `CLAUDE_CODE_OAUTH_TOKEN` | el token del paso 1 |
-     | `TELEGRAM_BOT_TOKEN` | el token del paso 2 |
-     | `OWNER_TELEGRAM_ID` | el número del paso 3 |
-     | `AGENT_NAME` | el nombre del agente, en minúsculas (opcional) |
-5. **Deploy.** Si falta una variable, el log dice `FALTA …` y se detiene. Es a propósito.
+     | Variable | Value | Required |
+     |---|---|---|
+     | `CLAUDE_CODE_OAUTH_TOKEN` | token from step 1 | yes |
+     | `TELEGRAM_BOT_TOKEN` | token from step 2 | yes |
+     | `OWNER_TELEGRAM_ID` | number from step 3 | yes |
+     | `AGENT_NAME` | the agent's name, lowercase | no (`agent`) |
+     | `AGENT_LANGUAGE` | language it talks in, plain text | no (Spanish from Mexico, *tú*) |
+5. **Deploy.** If a key is missing, the log says `MISSING …` and stops. That's on purpose.
 
-Los secretos viven **solo** en las Variables de Railway, nunca en este repo.
+Secrets live **only** in Railway Variables, never in this repo.
 
-## Prueba de aceptación
+## Acceptance
 
-- **Sin secretos:** `./tests/aceptacion.sh` revisa el script, los JSON, los `@` del alma y que no
-  haya tokens en el repo. Con Docker, además construye la imagen y comprueba que sin llaves no arranca.
-- **Ya desplegado (L3):**
-  1. El log dice `arrancó — latido cada 30s` y luego `latido OK` cada 30 s.
-  2. Le escribes «¿quién eres?» y contesta en menos de un minuto, con su nombre y de tú.
-     **Esta es la única prueba de que está vivo y no zombie:** el latido solo demuestra que el proceso existe.
-  3. Desde otra cuenta de Telegram no te contesta; solo da un código de pairing.
-  4. Haces redeploy, le preguntas «¿de qué hablamos?» y se acuerda.
+`./tests/l0-static.sh` and `./tests/l1-unit.sh` run on any Linux box; CI also runs the Docker layer.
+Once deployed, the real proof is the L3 checklist in [tests/README.md](tests/README.md):
+**message it and get an answer.** The heartbeat only proves the process exists, not that it's alive.
 
-## Licencia
+## License
 
-MIT — ver `LICENSE`.
+[MIT](LICENSE). Security issues: see [SECURITY.md](SECURITY.md).

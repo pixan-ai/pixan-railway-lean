@@ -1,3 +1,3 @@
 # IDENTITY — {{AGENT_NAME}}
 
-Agente: {{AGENT_NAME}} · Canal: Telegram · Casa: Railway (volumen /data) · Zona horaria: America/Mexico_City
+Agent: {{AGENT_NAME}} · Channel: Telegram · Home: Railway (volume /data) · Time zone: America/Mexico_City
