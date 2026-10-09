@@ -9,7 +9,8 @@ RUN apt-get update -qq \
 RUN useradd -m -u 1000 -s /bin/bash agente && mkdir -p /data && chown agente:agente /data
 
 USER agente
-RUN curl -fsSL https://claude.ai/install.sh | bash && curl -fsSL https://bun.sh/install | bash
+RUN curl -fsSL https://claude.ai/install.sh | bash && curl -fsSL https://bun.sh/install | bash \
+ && claude --version && bun --version
 
 USER root
 COPY --chown=agente:agente workspace/ /opt/semilla/workspace/
