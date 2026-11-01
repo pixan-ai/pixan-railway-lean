@@ -1,5 +1,5 @@
 # A Linux box with Claude Code, Bun (required by the Telegram plugin) and tmux.
-FROM debian:bookworm-slim@sha256:7c7b2c966bc9ee8cedfeef67e0e279108992c77681fa595db4a9d65c06ccc587
+FROM debian:bookworm-slim@sha256:99c0b25c46d0214d5a2091092e7908907dcaecd6a962cde0ac700acee222b6f3
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 # Base image is pinned by digest; pinning each apt package would break on Debian point releases.
